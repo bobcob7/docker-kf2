@@ -1,12 +1,10 @@
-FROM ubuntu:focal
-
-RUN \
-	apt-get -y update && \
-	apt-get -y install wget lib32gcc1 libcurl4 && \
-	apt-get clean && \
-	find /var/lib/apt/lists -type f | xargs rm -vf
-
-RUN useradd -m steam
+FROM cm2network/steamcmd
+USER root
+RUN apt-get update && \
+	apt-get install -y ruby && \
+    apt-get clean -y autoclean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/{apt,dpkg} /var/{cache,log}
 
 WORKDIR /home/steam
 USER steam

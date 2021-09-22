@@ -1,19 +1,3 @@
-function require_steamcmd() {
-    # Download/extract steam
-    mkdir -p "${HOME}/steam/downloads"
-    [[ -f "${HOME}/steam/downloads/steamcmd_linux.tar.gz" ]] || \
-        wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz -P "${HOME}/steam/downloads"
-    [[ -f "${HOME}/steam/steamcmd.sh" ]] || (
-        cd "${HOME}/steam"
-        tar xzvf downloads/steamcmd_linux.tar.gz
-    )
-    
-    (
-        cd "${HOME}/steam"
-        ./steamcmd.sh +exit
-    )
-}
-
 function require_ruby() {
   ruby -v
   [[ -f Gemfile ]] && ( \
@@ -24,7 +8,7 @@ function require_ruby() {
 function require_kf2() {
     # Download kf2
     [[ -f "${HOME}/kf2server/Binaries/Win64/KFServer.exe" ]] || ( \
-        cd "${HOME}/steam"
+        cd "${HOME}/steamcmd"
         ./steamcmd.sh \
             +login anonymous \
             +force_install_dir "${HOME}/kf2server" \
@@ -36,7 +20,7 @@ function require_kf2() {
 function update() {
     rm -rf "${HOME}/steam/steamapps"
     (
-        cd "${HOME}/steam"
+        cd "${HOME}/steamcmd"
         ./steamcmd.sh \
             +login anonymous \
             +force_install_dir "${HOME}/kf2server" \
